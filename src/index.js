@@ -1,6 +1,7 @@
 import './css/styles.css';
 import { Report } from 'notiflix/build/notiflix-report-aio';
 import debounce from 'lodash.debounce';
+import { fetchCountries } from './js/fetchCountries';
 
 
 const DEBOUNCE_DELAY = 300;
@@ -93,17 +94,3 @@ function addHidden() {
   countryInfo.style.visibility = 'hidden';
 }
 
-const BASE_URL = 'https://restcountries.com/v3.1/name/';
-const searchParams = new URLSearchParams({
-    fields: 'name,capital,population,flags,languages,',
-});
-
-export const fetchCountries = (name) => {
-    return fetch(`${BASE_URL}${name}?${searchParams}`)
-        .then(response => {
-            if (response.status === 404) {
-                throw new Error(response.status);
-            }
-            return response.json();
-        });
-};
